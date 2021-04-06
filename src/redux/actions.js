@@ -31,6 +31,7 @@ export const updateUser = (params, history) => {
       .post(BASE_URL + "/user_edit_profile", params, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {

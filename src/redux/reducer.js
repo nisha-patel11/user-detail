@@ -11,6 +11,7 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         loginSuccessData: action.payload,
+        loginFailData: [],
       };
     case LOGIN_FAIL:
       return {
@@ -26,6 +27,7 @@ const user = (state = initialState, action) => {
           lastname: action.payload.data.lastname,
           email: action.payload.data.email,
           phone_number: action.payload.data.phone_number,
+          profile_picture: action.payload.data.profile_picture,
         },
       };
     default:

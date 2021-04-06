@@ -14,35 +14,30 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
+  const PrivateRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+    <Route
+      {...rest}
+      render={(props) =>
+        localStorage.getItem("isLogin") ? (
+          <Component {...props} />
+        ) : (
+          <Redirect to={"/"} />
+        )
+      }
+    />
+  );
   return (
     <>
       <Provider store={store}>
         <Router>
           <Switch>
             <Route exact path="/" component={Login} />
-            <Route
-              exact
+            <PrivateRoute
+              exact={true}
               path="/user-detail"
-              render={() =>
-                localStorage.getItem("isLogin") ? (
-                  <Route component={UserDetail} />
-                ) : (
-                  <Redirect to={Login} />
-                )
-              }
+              component={UserDetail}
             />
-            <Route
-              exact
-              path="/edit-user"
-              render={() =>
-                localStorage.getItem("isLogin") ? (
-                  <Route component={EditUser} />
-                ) : (
-                  <Redirect to={Login} />
-                )
-              }
-            />
-            {/* <Route path="/edit-user" component={EditUser} /> */}
+            <PrivateRoute exact={true} path="/edit-user" component={EditUser} />
           </Switch>
         </Router>
         <ToastContainer />
